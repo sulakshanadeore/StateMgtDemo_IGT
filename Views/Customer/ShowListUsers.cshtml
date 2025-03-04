@@ -1,0 +1,51 @@
+﻿@using StateMgtDemo.Models;
+
+@{
+    ViewBag.Title = "ShowListUsers";
+}
+
+<h2>ShowListUsers</h2>
+
+<h1>Use of View Bag--- pass data from controller action to view</h1>
+<table>
+    <tr>
+        @foreach (var item in ViewBag.ShowListUsers)
+        {
+
+
+            <td>@item.UserName</td>
+            <td>@item.Password</td>
+
+
+        }
+    </tr>
+    <hr />
+
+    <tr>
+        <h1>Use of View Data--- pass data from controller action to view but casting required</h1>
+        @foreach (User item in (List<StateMgtDemo.Models.User>)ViewData["userslist"])
+        {
+
+
+            <td>@item.UserName</td>
+            <td>@item.Password</td>
+
+
+        }
+    </tr>
+
+    <hr />
+
+
+    <h1>Use of Temp Data--- pass data from controller action to view but casting required</h1>
+    <tr>
+        @foreach (User item in (List<StateMgtDemo.Models.User>)TempData["tempusers"])
+        {
+
+            <td>@item.UserName</td>
+            <td>@item.Password</td>
+
+
+        }
+    </tr>
+</table>

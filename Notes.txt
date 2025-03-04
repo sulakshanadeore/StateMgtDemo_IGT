@@ -1,0 +1,48 @@
+﻿What is StateMgt?
+State Management is a technique which is used in web apps to remember the data across request and when
+we want to take data from one page of the app to another page in the app.
+
+Why do we need State Mgt?
+
+Web apps work on Http/Https protocol, which is a stateless protocol(doesn't remember anything of the 
+previous request to process the current request).
+So we need state Mgt to remember data across request.
+
+
+How do we state management?
+We use the following techniques:
+1) HttpContext---HttpRequest and HttpResponse
+2) HttpCookies,Query Strings,HttpSessions, HttpApplication
+
+Different types of state Mgt:
+1) Server Side----- Session, Application
+2) Client Side-----Hidden Fields, Cookies,Query String, View State(Asp.net)
+
+
+MVC---- ViewBag,ViewData,TempData
+
+
+Tempdata---when we want to pass data from one action to another action as well as controller to view.
+If u want tempdata for multiple actions, then avoid TempData and use Sessions instead.
+TempData.Keep("key") is used to reusing the TempData.
+After keeping, if we want to reuse tempdata again, we shall use TempData.Peek("key"), so that it will be saved without deleting it.
+
+Once the data is taken from TempData we may use it in the action for any purpose like returning content by concatenating the data
+or we may it take it to the View using ViewBag or ViewData.
+
+ViewBag and ViewData are 2 ways to transfer data from controller action to the view.
+ViewBag uses dynamic feature of c# whereas  ViewData is a dictionary collection which stores data in key value pair.
+
+
+
+<h1>@ViewBag.custid</h1>
+        <h2>@ViewBag.custname</h2>
+        <h3>@ViewBag.custcity</h3>
+
+
+
+
+
+
+
+
