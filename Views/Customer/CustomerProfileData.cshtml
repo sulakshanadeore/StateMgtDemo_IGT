@@ -40,5 +40,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "EditCustomerProfileData", new {  id = @ViewBag.custid }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Place Order", "MyOrders",new {id=@ViewBag.custid})
 </p>

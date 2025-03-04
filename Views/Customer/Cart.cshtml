@@ -1,0 +1,93 @@
+﻿@model StateMgtDemo.Models.OrderDetails
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h2>Cart</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>OrderDetails</h4>
+        <h1>Cart of Customer ID : @Session["custid"]</h1>
+        <h1>Orderid: @ViewBag.Orderid</h1>
+    <table>
+        <tr>
+            <th>Productid</th>
+            <th>Order Quantity</th>
+            <th>ORder Value</th>
+        </tr>
+        <tr>
+            <td>
+                @if(ViewBag.Productid!=null)
+                {
+                @ViewBag.Productid
+                }
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </td>
+            <td>
+                @if(ViewBag.TotalPrice!=null)
+                { 
+                @ViewBag.TotalPrice
+                }
+            </td>
+        </tr>
+    </table>
+        @*<div class="form-group">
+     @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
+     <div class="col-md-10">
+         @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+         @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+     </div>
+ </div>*@
+
+      
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Custid, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Custid, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Custid, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Orderid, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Orderid, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Orderid, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Prodid, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prodid, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Prodid, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+       
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ListOfProducts","Products")
+</div>

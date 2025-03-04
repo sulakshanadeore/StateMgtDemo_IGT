@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace StateMgtDemo.Controllers
 {
@@ -23,6 +24,10 @@ namespace StateMgtDemo.Controllers
         new CustomerModel{Custid=3,CustName="Prakash Rao",City="Mumbai",CustomerProfile=users[2] },
         };
 
+
+        static List<OrderDetails> orders = new List<OrderDetails>();
+
+        static int orderid = 0;
 
         public ActionResult CustomerProfileData()
         {
@@ -146,14 +151,56 @@ namespace StateMgtDemo.Controllers
 
             return View(data);
         }
-        public ActionResult Cart()
+
+
+        public ActionResult MyOrders(int id)
         {
-            TempData.Keep("myValidateUser");//keep the data for the next request
-            string uname = TempData["myValidateduser"].ToString();
 
-            string s=string.Concat("You are welcome ", uname);
+            Session["custid"] = id;
+            return RedirectToAction("ListOfProducts", "Products");
+        }
 
-            return RedirectToAction("Index");
+        public ActionResult Cart(int id)
+        {
+            ViewBag.Productid = id;
+            ProductsModel productData = ProductsController.products.Find(p => p.Prodid == id);
+            orderid = orderid + 1;
+            if (productData != null)
+            {
+                orders.Add(new OrderDetails { Custid = Convert.ToInt32(Session["custid"]), Prodid = id, Orderid = orderid });
+                
+
+            }
+            ViewBag.Orderid = orderid;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Cart(int id,int qty)
+        {
+            //custid,prodid,qty,orderid
+           //TempData.Keep("myValidateUser");//keep the data for the next request
+           //int custid=Convert.ToInt32(Session["custid"]);
+           //string uname = TempData["myValidateduser"].ToString();
+            //string s=string.Concat("You are welcome ", uname);
+      OrderDetails details   =orders.Find(o => o.Prodid == id);
+            details.Qty = qty;
+            List<OrderDetails> orderDetails = orders.FindAll(o => o.Custid == Convert.ToInt32(Session["custid"]));
+            ProductsModel modelData=ProductsController.products.Find(p => p.Prodid == id);
+            int amt=modelData.Price* qty;
+            double totalAmt = 0;
+            foreach (var item in orderDetails)
+            {
+                int q=item.Qty;
+                var pdata = ProductsController.products.Find(p => p.Prodid == item.Prodid);
+             totalAmt=(totalAmt) + (pdata.Price* q);
+
+            }
+
+            ViewBag.TotalPrice = totalAmt;
+            ViewBag.Productid = id;
+            ViewBag.Orderid = orderid;
+            return View(); 
         }
     }
 }
