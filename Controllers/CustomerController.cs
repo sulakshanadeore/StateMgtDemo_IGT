@@ -202,5 +202,12 @@ namespace StateMgtDemo.Controllers
             ViewBag.Orderid = orderid;
             return View(); 
         }
+
+
+        public ActionResult ShowAll(int id)
+        {
+            List<OrderDetails> allOrders=orders.FindAll(c=>c.Custid==id);    
+            return View(allOrders);
+        }
     }
 }

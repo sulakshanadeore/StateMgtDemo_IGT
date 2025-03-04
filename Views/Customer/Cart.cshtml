@@ -90,4 +90,5 @@
 
 <div>
     @Html.ActionLink("Back to List", "ListOfProducts","Products")
+    @Html.ActionLink("Show My Cart", "ShowAll", "Customer",new { id = Convert.ToInt32(Session["custid"]) },"");
 </div>
