@@ -42,21 +42,26 @@ namespace StateMgtDemo.Controllers
             }
             else
             {
-
-
-                string username = TempData["myValidateduser"].ToString();
-                CustomerModel model = customers.Find(c => c.CustomerProfile.UserName == username);
-                if (model == null)
+                HttpCookie cookie=Request.Cookies["UserDemo"];
+                if (cookie != null)
                 {
-                    return View("Login");
-                }
-                else
-                {
-                    ViewBag.custid = model.Custid;
-                    ViewBag.custname = model.CustName;
-                    ViewBag.custcity = model.City;
+                    string usernameInCookie=cookie.Value;
 
 
+                    string username = TempData["myValidateduser"].ToString();
+                    CustomerModel model = customers.Find(c => c.CustomerProfile.UserName == username);
+                    if (model == null)
+                    {
+                        return View("Login");
+                    }
+                    else
+                    {
+                        ViewBag.custid = model.Custid;
+                        ViewBag.custname = model.CustName;
+                        ViewBag.custcity = model.City;
+
+
+                    }
                 }
                 return View();
             }
@@ -137,6 +142,11 @@ namespace StateMgtDemo.Controllers
                 {
                     //pass data from login action to cart action
                     TempData["myValidateduser"]=validatedUser.UserName;
+                    HttpCookie cookie = new HttpCookie("UserDemo");
+                    cookie.Value = validatedUser.UserName;
+                    cookie.Expires = DateTime.Now.AddMinutes(10);
+                    Response.Cookies.Add(cookie);
+
 
                     return RedirectToAction("CustomerProfileData");
                 
